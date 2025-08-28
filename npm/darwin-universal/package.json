@@ -1,5 +1,5 @@
 {
-  "name": "@anush008/tokenizers-darwin-universal",
+  "name": "@inference-net/tokenizers-darwin-universal",
   "version": "0.0.0",
   "os": [
     "darwin"
@@ -13,5 +13,5 @@
   "engines": {
     "node": ">= 10"
   },
-  "repository": "https://github.com/Anush008/tokenizers"
+  "repository": "https://github.com/context-labs/tokenizers"
 }

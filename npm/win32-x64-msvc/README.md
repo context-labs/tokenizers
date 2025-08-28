@@ -1,3 +1,3 @@
-# `@anush008/tokenizers-win32-x64-msvc`
+# `@inference-net/tokenizers-win32-x64-msvc`
 
-This is the **x86_64-pc-windows-msvc** binary for `@anush008/tokenizers`
+This is the **x86_64-pc-windows-msvc** binary for `@inference-net/tokenizers`

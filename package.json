@@ -1,5 +1,5 @@
 {
-  "name": "@anush008/tokenizers",
+  "name": "@inference-net/tokenizers",
   "version": "0.2.0",
   "main": "index.js",
   "types": "index.d.ts",
@@ -35,6 +35,6 @@
     "version": "napi version"
   },
   "packageManager": "yarn@3.6.3",
-  "repository": "https://github.com/Anush008/tokenizers",
+  "repository": "https://github.com/context-labs/tokenizers",
   "description": "Multi-arch builds of HuggingFace tokenizers"
 }

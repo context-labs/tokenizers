@@ -1,5 +1,5 @@
 {
-  "name": "@anush008/tokenizers-linux-x64-gnu",
+  "name": "@inference-net/tokenizers-linux-x64-gnu",
   "version": "0.0.0",
   "os": [
     "linux"
@@ -16,7 +16,7 @@
   "engines": {
     "node": ">= 10"
   },
-  "repository": "https://github.com/Anush008/tokenizers",
+  "repository": "https://github.com/context-labs/tokenizers",
   "libc": [
     "glibc"
   ]
