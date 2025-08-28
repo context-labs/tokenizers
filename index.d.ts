@@ -5,21 +5,29 @@
 
 export function bpeDecoder(suffix?: string | undefined | null): Decoder
 export function byteFallbackDecoder(): Decoder
-export function ctcDecoder(padToken?: string = '<pad>', wordDelimiterToken?: string | undefined | null, cleanup?: boolean | undefined | null): Decoder
+export function ctcDecoder(
+  padToken?: string = '<pad>',
+  wordDelimiterToken?: string | undefined | null,
+  cleanup?: boolean | undefined | null,
+): Decoder
 export function fuseDecoder(): Decoder
-export function metaspaceDecoder(replacement?: string = '▁', addPrefixSpace?: bool = true): Decoder
+export function metaspaceDecoder(
+  replacement?: string = '▁',
+  prependScheme?: prepend_scheme = 'always',
+  split?: split = true,
+): Decoder
 export function replaceDecoder(pattern: string, content: string): Decoder
 export function sequenceDecoder(decoders: Array<Decoder>): Decoder
 export function stripDecoder(content: string, left: number, right: number): Decoder
 export function wordPieceDecoder(prefix?: string = '##', cleanup?: bool = true): Decoder
 export const enum TruncationDirection {
   Left = 'Left',
-  Right = 'Right'
+  Right = 'Right',
 }
 export const enum TruncationStrategy {
   LongestFirst = 'LongestFirst',
   OnlyFirst = 'OnlyFirst',
-  OnlySecond = 'OnlySecond'
+  OnlySecond = 'OnlySecond',
 }
 export interface BpeOptions {
   cacheCapacity?: number
@@ -74,28 +82,44 @@ export const enum JsSplitDelimiterBehavior {
   Isolated = 'Isolated',
   MergedWithPrevious = 'MergedWithPrevious',
   MergedWithNext = 'MergedWithNext',
-  Contiguous = 'Contiguous'
+  Contiguous = 'Contiguous',
 }
 /** byte_level(addPrefixSpace: bool = true, useRegex: bool = true) */
-export function byteLevelPreTokenizer(addPrefixSpace?: boolean | undefined | null, useRegex?: boolean | undefined | null): PreTokenizer
+export function byteLevelPreTokenizer(
+  addPrefixSpace?: boolean | undefined | null,
+  useRegex?: boolean | undefined | null,
+): PreTokenizer
 export function byteLevelAlphabet(): Array<string>
 export function whitespacePreTokenizer(): PreTokenizer
 export function whitespaceSplitPreTokenizer(): PreTokenizer
 export function bertPreTokenizer(): PreTokenizer
-export function metaspacePreTokenizer(replacement?: string = '▁', addPrefixSpace?: bool = true): PreTokenizer
+export function metaspacePreTokenizer(
+  replacement?: string = '▁',
+  prependScheme?: prepend_scheme = 'always',
+  split?: split = true,
+): PreTokenizer
 export function splitPreTokenizer(pattern: string, behavior: string, invert?: boolean | undefined | null): PreTokenizer
 export function punctuationPreTokenizer(behavior?: string | undefined | null): PreTokenizer
 export function sequencePreTokenizer(preTokenizers: Array<PreTokenizer>): PreTokenizer
 export function charDelimiterSplit(delimiter: string): PreTokenizer
 export function digitsPreTokenizer(individualDigits?: boolean | undefined | null): PreTokenizer
 export function bertProcessing(sep: [string, number], cls: [string, number]): Processor
-export function robertaProcessing(sep: [string, number], cls: [string, number], trimOffsets?: boolean | undefined | null, addPrefixSpace?: boolean | undefined | null): Processor
+export function robertaProcessing(
+  sep: [string, number],
+  cls: [string, number],
+  trimOffsets?: boolean | undefined | null,
+  addPrefixSpace?: boolean | undefined | null,
+): Processor
 export function byteLevelProcessing(trimOffsets?: boolean | undefined | null): Processor
-export function templateProcessing(single: string, pair?: string | undefined | null, specialTokens?: Array<[string, number]> | undefined | null): Processor
+export function templateProcessing(
+  single: string,
+  pair?: string | undefined | null,
+  specialTokens?: Array<[string, number]> | undefined | null,
+): Processor
 export function sequenceProcessing(processors: Array<Processor>): Processor
 export const enum PaddingDirection {
   Left = 0,
-  Right = 1
+  Right = 1,
 }
 export interface PaddingOptions {
   maxLength?: number
@@ -146,7 +170,11 @@ export class Encoding {
   charToToken(pos: number, seqId?: number | undefined | null): number | null
   charToWord(pos: number, seqId?: number | undefined | null): number | null
   pad(length: number, options?: PaddingOptions | undefined | null): void
-  truncate(length: number, stride?: number | undefined | null, direction?: string | TruncationDirection | undefined | null): void
+  truncate(
+    length: number,
+    stride?: number | undefined | null,
+    direction?: string | TruncationDirection | undefined | null,
+  ): void
   wordToTokens(word: number, seqId?: number | undefined | null): [number, number] | null | undefined
   wordToChars(word: number, seqId?: number | undefined | null): [number, number] | null | undefined
   tokenToChars(token: number): [number, [number, number]] | null | undefined
@@ -155,7 +183,7 @@ export class Encoding {
   getSequenceIds(): Array<number | undefined | null>
   tokenToSequence(token: number): number | null
 }
-export class Model { }
+export class Model {}
 export type Bpe = BPE
 export class BPE {
   static empty(): Model
@@ -184,7 +212,7 @@ export class Normalizer {
 export class PreTokenizer {
   preTokenizeString(sequence: string): [string, [number, number]][]
 }
-export class Processor { }
+export class Processor {}
 export class AddedToken {
   constructor(token: string, isSpecial: boolean, options?: AddedTokenOptions | undefined | null)
   getContent(): string
@@ -199,7 +227,11 @@ export class Tokenizer {
   save(path: string, pretty?: boolean | undefined | null): void
   addAddedTokens(tokens: Array<AddedToken>): number
   addTokens(tokens: Array<string>): number
-  encode(sentence: InputSequence, pair?: InputSequence | null, encodeOptions?: EncodeOptions | undefined | null): Promise<JsEncoding>
+  encode(
+    sentence: InputSequence,
+    pair?: InputSequence | null,
+    encodeOptions?: EncodeOptions | undefined | null,
+  ): Promise<JsEncoding>
   encodeBatch(sentences: EncodeInput[], encodeOptions?: EncodeOptions | undefined | null): Promise<JsEncoding[]>
   decode(ids: Array<number>, skipSpecialTokens: boolean): Promise<string>
   decodeBatch(ids: Array<Array<number>>, skipSpecialTokens: boolean): Promise<string[]>
@@ -220,6 +252,10 @@ export class Tokenizer {
   tokenToId(token: string): number | null
   train(files: Array<string>): void
   runningTasks(): number
-  postProcess(encoding: Encoding, pair?: Encoding | undefined | null, addSpecialTokens?: boolean | undefined | null): Encoding
+  postProcess(
+    encoding: Encoding,
+    pair?: Encoding | undefined | null,
+    addSpecialTokens?: boolean | undefined | null,
+  ): Encoding
 }
-export class Trainer { }
+export class Trainer {}
